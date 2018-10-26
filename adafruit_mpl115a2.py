@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 """
-`Adafruit_MPL115A2`
+`adafruit_mpl115a2`
 ====================================================
 
 CircuitPython driver for MPL115A2 I2C Barometric Pressure/Temperature Sensor.
@@ -74,6 +74,7 @@ class MPL115A2:
         return self._read()[1]
 
     def _read_coefficients(self):
+        # pylint: disable=invalid-name
         buf = bytearray(8)
         buf[0] = _MPL115A2_REGISTER_A0_COEFF_MSB
         with self._i2c as i2c:
@@ -82,14 +83,13 @@ class MPL115A2:
         a0, b1, b2, c12 = struct.unpack(">hhhh", buf)
         c12 >>= 2
         # see datasheet pg. 9, do math
-        # pylint: disable=invalid-name
         self._a0 = a0 / 8
         self._b1 = b1 / 8192
         self._b2 = b2 / 16384
         self._c12 = c12 / 4194304
-        # pylint: enable=invalid-name
 
     def _read(self):
+        # pylint: disable=invalid-name
         self._buf[0] = _MPL115A2_REGISTER_STARTCONVERSION
         self._buf[1] = 0x00  # why? see datasheet, pg. 9, fig. 4
         with self._i2c as i2c:
