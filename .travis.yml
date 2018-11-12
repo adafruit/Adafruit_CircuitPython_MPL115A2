@@ -1,34 +1,33 @@
-# This is a common .travis.yml for generating library release zip files for
-# CircuitPython library releases using circuitpython-build-tools.
-# See https://github.com/adafruit/circuitpython-build-tools for detailed setup
-# instructions.
-
 dist: trusty
 sudo: false
 language: python
 python:
-    - "3.6"
-
+- '3.6'
 cache:
-    pip: true
-
+  pip: true
 deploy:
-  provider: releases
-  api_key: $GITHUB_TOKEN
+- provider: releases
+  api_key: "$GITHUB_TOKEN"
   file_glob: true
-  file: $TRAVIS_BUILD_DIR/bundles/*
+  file: "$TRAVIS_BUILD_DIR/bundles/*"
   skip_cleanup: true
   overwrite: true
   on:
     tags: true
-
+- provider: pypi
+  user: adafruit-travis
+  on:
+    tags: true
+  password:
+    secure: O1envncCM5yPOJITHG6mcgN7XR4hYGvIE8mpJyb/okQnH40bd9CIvbbLcYqbjLNukhG4qD4wWpxcFEriO26jLaHxdnUbtC6IZze3J/dwerPDoRXsiF/IlJVdAcR5yD59PqkCW2D8NHYmnxxNSeLBQDy1UUzPN+bfszC3rv/5rnPuzaw+WvbXDJGLyS5Gbo3EIhDFoLA501bSpz6QnZ6yoYUjzeyd2vYFHpsj16nIGrDI7woL6oCz74iE/iHFre9d6dF9R6nsGlJ3+ut1CX+7pAnrgMw3GntZpPB8rL62BGjubf9ETmXRL+tNZ0SoI4oBD/hZMqgqQvYg1YDD9PUUrnpraW2iQmos+te7reYleCVB7eRiVa/YQFgBHyYSpeakzJMv7u9aItpIaBNaH0lZpGemn8qhz4JWfPh8Bg/qvOnTfBG0t66dtwGXhFFbSnEEmFZKTQE37gAfECYJEBiPGFtEyz8HqDuScvCYDI330WSi+c4ttK70Kim7klfX/otMZR4aicvAybqVTFKNDa6l4ZfqVF4x7jGafqI64KDGSzt19ZAb0oCP1QF8o1DcV3lLSTt14Ra0qZ9jJY96e60YLyS08GvsbPH3jfx2qbb3i3YwDl0iFmpEAHFLN5cikD31bd0vLMXYpL97PqU1zwVdJI4mkk6Sbt5uBeYRfJe5fik=
 install:
-  - pip install -r requirements.txt
-  - pip install circuitpython-build-tools Sphinx sphinx-rtd-theme
-  - pip install --force-reinstall pylint==1.9.2
-
+- pip install -r requirements.txt
+- pip install circuitpython-build-tools Sphinx sphinx-rtd-theme
+- pip install --force-reinstall pylint==1.9.2
 script:
-  - pylint adafruit_mpl115a2.py
-  - ([[ ! -d "examples" ]] || pylint --disable=missing-docstring,invalid-name,bad-whitespace examples/*.py)
-  - circuitpython-build-bundles --filename_prefix adafruit-circuitpython-mpl115a2 --library_location .
-  - cd docs && sphinx-build -E -W -b html . _build/html
+- pylint adafruit_mpl115a2.py
+- ([[ ! -d "examples" ]] || pylint --disable=missing-docstring,invalid-name,bad-whitespace
+  examples/*.py)
+- circuitpython-build-bundles --filename_prefix adafruit-circuitpython-mpl115a2 --library_location
+  .
+- cd docs && sphinx-build -E -W -b html . _build/html && cd ..
