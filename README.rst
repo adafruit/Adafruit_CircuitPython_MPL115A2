@@ -9,8 +9,8 @@ Introduction
     :target: https://discord.gg/nBQh6qu
     :alt: Discord
 
-.. image:: https://travis-ci.org/adafruit/Adafruit_CircuitPython_MPL115A2.svg?branch=master
-    :target: https://travis-ci.org/adafruit/Adafruit_CircuitPython_MPL115A2
+.. image:: https://travis-ci.com/adafruit/Adafruit_CircuitPython_MPL115A2.svg?branch=master
+    :target: https://travis-ci.com/adafruit/Adafruit_CircuitPython_MPL115A2
     :alt: Build Status
 
 CircuitPython driver for MPL115A2 I2C Barometric Pressure/Temperature Sensor.
