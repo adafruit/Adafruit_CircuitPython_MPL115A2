@@ -50,14 +50,16 @@ __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MPL115A2.git"
 
 # pylint: disable=bad-whitespace
-_MPL115A2_ADDRESS                   = const(0x60)
-_MPL115A2_REGISTER_PRESSURE_MSB     = const(0x00)
-_MPL115A2_REGISTER_A0_COEFF_MSB     = const(0x04)
-_MPL115A2_REGISTER_STARTCONVERSION  = const(0x12)
+_MPL115A2_ADDRESS = const(0x60)
+_MPL115A2_REGISTER_PRESSURE_MSB = const(0x00)
+_MPL115A2_REGISTER_A0_COEFF_MSB = const(0x04)
+_MPL115A2_REGISTER_STARTCONVERSION = const(0x12)
 # pylint: enable=bad-whitespace
+
 
 class MPL115A2:
     """Driver for MPL115A2 I2C barometric pressure / temperature sensor."""
+
     def __init__(self, i2c, address=_MPL115A2_ADDRESS):
         self._i2c = i2c_device.I2CDevice(i2c, address)
         self._buf = bytearray(4)
@@ -66,7 +68,7 @@ class MPL115A2:
     @property
     def pressure(self):
         """The pressure in hPa."""
-        return self._read()[0]*10
+        return self._read()[0] * 10
 
     @property
     def temperature(self):
@@ -94,7 +96,7 @@ class MPL115A2:
         self._buf[1] = 0x00  # why? see datasheet, pg. 9, fig. 4
         with self._i2c as i2c:
             i2c.write(self._buf, end=2)
-            time.sleep(0.005) # see datasheet, Conversion Time = 3ms MAX
+            time.sleep(0.005)  # see datasheet, Conversion Time = 3ms MAX
             self._buf[0] = _MPL115A2_REGISTER_PRESSURE_MSB
             i2c.write(self._buf, end=1)
             i2c.readinto(self._buf)
@@ -104,7 +106,7 @@ class MPL115A2:
         # see datasheet pg. 6, eqn. 1, result in counts
         pressure = self._a0 + (self._b1 + self._c12 * temp) * pressure + self._b2 * temp
         # see datasheet pg. 6, eqn. 2, result in kPa
-        pressure = (65/1023) * pressure + 50
+        pressure = (65 / 1023) * pressure + 50
         # stolen from arduino driver, result in deg C
         temp = (temp - 498) / -5.35 + 25
         return pressure, temp
