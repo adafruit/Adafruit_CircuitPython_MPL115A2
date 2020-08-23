@@ -49,12 +49,10 @@ from micropython import const
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MPL115A2.git"
 
-# pylint: disable=bad-whitespace
 _MPL115A2_ADDRESS = const(0x60)
 _MPL115A2_REGISTER_PRESSURE_MSB = const(0x00)
 _MPL115A2_REGISTER_A0_COEFF_MSB = const(0x04)
 _MPL115A2_REGISTER_STARTCONVERSION = const(0x12)
-# pylint: enable=bad-whitespace
 
 
 class MPL115A2:
