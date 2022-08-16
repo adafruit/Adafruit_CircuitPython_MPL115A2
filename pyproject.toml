@@ -12,7 +12,7 @@ requires = [
 [project]
 name = "adafruit-circuitpython-mpl115a2"
 description = "CircuitPython driver for MPL115A2 I2C Barometric Pressure/Temperature Sensor."
-version = "0.0.0-auto.0"
+version = "0.0.0+auto.0"
 readme = "README.rst"
 authors = [
     {name = "Adafruit Industries", email = "circuitpython@adafruit.com"}
