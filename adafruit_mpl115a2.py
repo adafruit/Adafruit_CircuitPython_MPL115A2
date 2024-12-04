@@ -24,11 +24,11 @@ Implementation Notes
 * Adafruit's Bus Device library: https://github.com/adafruit/Adafruit_CircuitPython_BusDevice
 """
 
-import time
 import struct
+import time
+
 from adafruit_bus_device import i2c_device
 from micropython import const
-
 
 try:
     from typing import Tuple
