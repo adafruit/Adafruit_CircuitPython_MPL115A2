@@ -29,6 +29,14 @@ import struct
 from adafruit_bus_device import i2c_device
 from micropython import const
 
+
+try:
+    from typing import Tuple
+
+    from busio import I2C
+except ImportError:
+    pass
+
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MPL115A2.git"
 
@@ -41,22 +49,22 @@ _MPL115A2_REGISTER_STARTCONVERSION = const(0x12)
 class MPL115A2:
     """Driver for MPL115A2 I2C barometric pressure / temperature sensor."""
 
-    def __init__(self, i2c, address=_MPL115A2_ADDRESS):
+    def __init__(self, i2c: I2C, address: int = _MPL115A2_ADDRESS):
         self._i2c = i2c_device.I2CDevice(i2c, address)
         self._buf = bytearray(4)
         self._read_coefficients()
 
     @property
-    def pressure(self):
+    def pressure(self) -> float:
         """The pressure in hPa."""
         return self._read()[0] * 10
 
     @property
-    def temperature(self):
+    def temperature(self) -> float:
         """The temperature in deg C."""
         return self._read()[1]
 
-    def _read_coefficients(self):
+    def _read_coefficients(self) -> None:
         # pylint: disable=invalid-name
         buf = bytearray(8)
         buf[0] = _MPL115A2_REGISTER_A0_COEFF_MSB
@@ -71,7 +79,7 @@ class MPL115A2:
         self._b2 = b2 / 16384
         self._c12 = c12 / 4194304
 
-    def _read(self):
+    def _read(self) -> Tuple[float, float]:
         # pylint: disable=invalid-name
         self._buf[0] = _MPL115A2_REGISTER_STARTCONVERSION
         self._buf[1] = 0x00  # why? see datasheet, pg. 9, fig. 4
