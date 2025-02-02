@@ -4,10 +4,12 @@
 # SPDX-License-Identifier: MIT
 
 import time
+
 import board
 from adafruit_display_text.bitmap_label import Label
-from terminalio import FONT
 from displayio import Group
+from terminalio import FONT
+
 import adafruit_mpl115a2
 
 # Simple demo of using the built-in display.
@@ -37,6 +39,8 @@ board.DISPLAY.root_group = main_group
 # begin main loop
 while True:
     # update the text of the label(s) to show the sensor readings
-    display_output_label.text = f"Pressure: {mpl.pressure:.2f} hPa\nTemperature: {mpl.temperature:.2f} C"
+    display_output_label.text = (
+        f"Pressure: {mpl.pressure:.2f} hPa\nTemperature: {mpl.temperature:.2f} C"
+    )
     # wait for a bit
     time.sleep(0.5)
